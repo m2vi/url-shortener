@@ -3,6 +3,7 @@ import { removeEmpty } from '@utils/utils';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  return res.status(401).json({});
   const { link, alias } = Object.freeze(req.query);
 
   const data: any = await shortener.getMany(removeEmpty({ link, alias }));

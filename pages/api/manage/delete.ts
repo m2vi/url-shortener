@@ -2,6 +2,7 @@ import shortener from '@utils/shortener';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  return res.status(401).json({});
   const { alias } = Object.freeze(req.query);
 
   const data: any = await shortener.delete({ alias: alias?.toString() });
