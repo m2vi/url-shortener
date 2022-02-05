@@ -13,26 +13,34 @@ class Shortener {
   private validateInput(input: any): ValidateInputProps {
     const { link, alias } = Object.freeze(input);
 
-    if (!validator.isURL(link, { protocols: ['http', 'https'] })) {
-      return {
-        valid: false,
-        error: 'given link parameter is not a valid url',
-        code: 400,
-      };
-    }
-
     if (link?.length > 2048) {
       return {
         valid: false,
-        error: 'maximum url length exceeded',
+        error: 'Maximum url length exceeded',
         code: 413,
+      };
+    }
+
+    if (alias?.length > 512) {
+      return {
+        valid: false,
+        error: 'Maximum alias length exceeded',
+        code: 413,
+      };
+    }
+
+    if (!validator.isURL(link, { protocols: ['http', 'https'] })) {
+      return {
+        valid: false,
+        error: 'Link parameter is not valid',
+        code: 400,
       };
     }
 
     if (alias && !alias?.match(new RegExp(`[a-zA-Z0-9\-_]`))) {
       return {
         valid: false,
-        error: 'parameter alias is malformed',
+        error: 'Alias is malformed',
         code: 400,
       };
     }
@@ -51,7 +59,7 @@ class Shortener {
 
       return await database.insert({ link: input?.link, alias: this.alias.createAlias(input?.alias) });
     } catch (error) {
-      return { error: 'alias already exists', code: 400 };
+      return { error: 'Alias already exists', code: 400 };
     }
   }
 
@@ -65,11 +73,11 @@ class Shortener {
 
       const data = await database.findOne({ alias });
 
-      if (!data) throw Error('alias was not found');
+      if (!data) throw Error('Alias was not found');
 
       return { link: data?.link, alias: data?.alias };
     } catch (error) {
-      return { error: 'alias was not found', code: 404 };
+      return { error: 'Alias was not found', code: 404 };
     }
   }
 
@@ -81,7 +89,7 @@ class Shortener {
 
       return data;
     } catch (error) {
-      return { error: 'database error', code: 500 };
+      return { error: 'Database error', code: 500 };
     }
   }
 }
