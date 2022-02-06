@@ -49,15 +49,19 @@ const Home = () => {
 
   return (
     <Full className='flex justify-center items-center'>
-      <div className='max-w-sm w-full'>
-        <UrlInput ref={UrlRef} className='mb-2' />
-        <AliasInput ref={AliasRef} className='mb-1' />
-        <p className='text-xs mb-2 text-primary-300'>*Optional</p>
-        <Button className='mt-4' size='big' onClick={handleSubmit}>
-          Shorten
-        </Button>
+      <div className='max-w-xl w-full'>
+        <div className='flex w-full mb-2'>
+          <UrlInput className='mr-2 w-full' ref={UrlRef} />
+          <Button size='big' onClick={handleSubmit}>
+            Shorten
+          </Button>
+        </div>
+        <div className='flex flex-col w-full'>
+          <AliasInput ref={AliasRef} className='mb-1' />
+          <p className='text-xs mb-2 text-primary-300'>*Optional</p>
+        </div>
+        <Modal />
       </div>
-      <Modal />
     </Full>
   );
 };

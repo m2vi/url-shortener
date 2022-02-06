@@ -3,6 +3,7 @@ import { useModal } from 'context/useModal';
 import { Fragment } from 'react';
 import { Button } from './Button';
 import copyToClipboard from 'copy-to-clipboard';
+import ResultInput from './input/home/result';
 
 const Modal = () => {
   const { state, dispatch } = useModal();
@@ -41,15 +42,8 @@ const Modal = () => {
               leaveTo='opacity-0 scale-95'
             >
               <div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-primary-900-80 border border-primary-500 backdrop-blur-lg shadow-xl rounded-2xl shadow-1'>
-                <div className='mt-2 flex flex-col'>
-                  <div className='text-button overflow-hidden overflow-ellipsis whitespace-nowrap w-full'>
-                    <span className='font-bold mr-1'>Old URL:</span>
-                    <span className='w-full'>{`${state?.data?.query?.link}`}</span>
-                  </div>
-                  <div className='text-button overflow-hidden overflow-ellipsis whitespace-nowrap w-full'>
-                    <span className='font-bold mr-1'>New URL:</span>
-                    <span className='w-full'>{`${state?.data?.shortened?.short}`}</span>
-                  </div>
+                <div className='flex w-full'>
+                  <ResultInput />
                 </div>
 
                 <div className='mt-7 flex justify-start'>
