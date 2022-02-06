@@ -18,7 +18,7 @@ class Database {
     }
   }
 
-  async insert({ link, alias }: LinkProps) {
+  async insert({ link, alias, customAlias }: LinkProps) {
     const db = await this.connect();
 
     if (!link || !alias) return { error: 'Missing params' };
@@ -26,11 +26,20 @@ class Database {
     const doc = {
       link,
       alias,
+      customAlias,
     };
 
     await db?.collection('shortener').insertOne(doc);
 
     return doc;
+  }
+
+  async exists(query: FilterQuery<LinkProps>): Promise<boolean> {
+    await this.connect();
+
+    const data = await this.schema.findOne(query).lean();
+
+    return Boolean(data);
   }
 
   async delete({ alias }: DeleteProps) {

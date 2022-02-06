@@ -2,7 +2,7 @@ import { FilterQuery } from 'mongoose';
 import validator from 'validator';
 import alias, { Alias } from './alias';
 import database from './db';
-import { ValidateInputProps, LinkProps, DeleteProps, GetProps } from './types';
+import { ValidateInputProps, LinkProps, DeleteProps, GetProps, InsertProps } from './types';
 
 class Shortener {
   alias: Alias;
@@ -52,12 +52,17 @@ class Shortener {
     };
   }
 
-  async insert(input: LinkProps) {
+  async insert(input: InsertProps) {
     try {
       const { valid, error, code } = this.validateInput(input);
       if (!valid) return { error, code };
 
-      return await database.insert({ link: input?.link, alias: this.alias.createAlias(input?.alias) });
+      //! FIX
+      /* const exists = await database.exists({ link: input?.link, custom: false });
+
+      if (exists) return await database.findOne({ link: input?.link, custom: false }); */
+
+      return await database.insert({ link: input?.link, alias: this.alias.createAlias(input?.alias), customAlias: Boolean(input?.alias) });
     } catch (error) {
       return { error: 'Alias already exists', code: 400 };
     }
