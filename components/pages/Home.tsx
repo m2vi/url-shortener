@@ -49,7 +49,7 @@ const Home = () => {
 
   return (
     <Full className='flex justify-center items-center'>
-      <div className='max-w-xl w-full'>
+      <div className='max-w-lg w-full'>
         <div className='flex w-full mb-2'>
           <UrlInput className='mr-2 w-full' ref={UrlRef} />
           <Button size='big' onClick={handleSubmit}>
