@@ -57,12 +57,12 @@ class Shortener {
       const { valid, error, code } = this.validateInput(input);
       if (!valid) return { error, code };
 
-      //! FIX
-      /* const exists = await database.exists({ link: input?.link, custom: false });
+      if (!input?.alias) {
+        const exists = await database.exists({ link: input?.link, custom: false });
+        if (exists) return await database.findOne({ link: input?.link, custom: false });
+      }
 
-      if (exists) return await database.findOne({ link: input?.link, custom: false }); */
-
-      return await database.insert({ link: input?.link, alias: this.alias.createAlias(input?.alias), customAlias: Boolean(input?.alias) });
+      return await database.insert({ link: input?.link, alias: this.alias.createAlias(input?.alias), custom: Boolean(input?.alias) });
     } catch (error) {
       return { error: 'Alias already exists', code: 400 };
     }
@@ -74,9 +74,9 @@ class Shortener {
 
   async get(input: GetProps) {
     try {
-      const { alias } = Object.freeze(input);
+      const frozen = Object.freeze(input);
 
-      const data = await database.findOne({ alias });
+      const data = await database.findOne(frozen);
 
       if (!data) throw Error('Alias was not found');
 

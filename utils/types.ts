@@ -1,7 +1,7 @@
 export interface LinkProps {
   link: string;
   alias: string;
-  customAlias: boolean;
+  custom: boolean;
 }
 
 export interface InsertProps {

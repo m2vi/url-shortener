@@ -6,7 +6,7 @@ const linkSchema = new Schema(
   {
     link: { type: String, unique: false, required: true },
     alias: { type: String, unique: true, required: true },
-    customAlias: { type: Boolean, unique: false, required: true },
+    custom: { type: Boolean, unique: false, required: true },
   },
   { _id: false, versionKey: false, autoIndex: false, id: false, collection: 'shortener' }
 );
